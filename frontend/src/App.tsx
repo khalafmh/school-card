@@ -5,6 +5,7 @@ import {CacheProvider} from "@emotion/react";
 import createCache from "@emotion/cache";
 import {prefixer} from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
+import {UploadFile} from "@mui/icons-material";
 
 const theme = createTheme({
     direction: "rtl",
@@ -35,7 +36,7 @@ const rootStyles = (theme: Theme) => ({
     ["& .school-card"]: {
         boxShadow: 10,
     },
-    ["& > *, & > form > :not(.MuiButton-root)"]: {
+    ["& > *, & > form > :not(.default-width)"]: {
         width: ["80vw"],
     },
 })
@@ -44,6 +45,7 @@ function App() {
     const [name, setName] = useState("")
     const [profession, setProfession] = useState("")
     const [traits, setTraits] = useState("")
+    const [image, setImage] = useState("")
 
     return (
         <ThemeProvider theme={theme}>
@@ -51,14 +53,28 @@ function App() {
                 <Box sx={rootStyles}>
                     <Typography variant={"h2"} component={"h1"} align={"center"}>بطاقة الطالبة</Typography>
                     <SchoolCard
-                        zoom={200}
-                        panFromLeft={100}
-                        panFromTop={100}
+                        imageSrc={image}
+                        zoom={0}
+                        panFromLeft={0}
+                        panFromTop={0}
                         name={name}
                         profession={profession}
                         traits={traits}
                     />
                     <form>
+                        <Button variant={"outlined"} startIcon={<UploadFile/>} component="label">
+                            الصورة
+                            <input
+                                hidden
+                                type={"file"}
+                                accept={"image/jpeg,image/png,.jpg,.jpeg,.png"}
+                                onChange={e => {
+                                    if (e.target.files?.[0] != null) {
+                                        setImage(URL.createObjectURL(e.target.files?.[0]))
+                                    }
+                                }}
+                            />
+                        </Button>
                         <TextField
                             variant={"filled"}
                             label={"الاسم"}
@@ -79,7 +95,7 @@ function App() {
                             value={traits}
                             onChange={e => setTraits(e.target.value)}
                         />
-                        <Button variant={"contained"}>حفظ</Button>
+                        <Button variant={"contained"} className={"default-width"}>حفظ</Button>
                     </form>
                 </Box>
             </RTL>

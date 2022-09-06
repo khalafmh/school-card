@@ -1,10 +1,12 @@
 import React from "react";
-import {Box, Theme, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {Person} from "@mui/icons-material";
+import {isBlank} from "./utils";
 
 interface ImageProps {
-    zoom: number,
-    panFromTop: number,
+    imageSrc: string
+    zoom: number
+    panFromTop: number
     panFromLeft: number
 }
 
@@ -69,15 +71,11 @@ const labelsContainerStyles = {
 
 const CardImage = (props: ImageProps) => (
     <Box sx={imageStyles(props)}>
-        <Person/>
+        {isBlank(props.imageSrc) ? <Person/> : <img src={props.imageSrc} alt={"صورة الطالبة"}/>}
     </Box>
 )
 
 const CardLabels = (props: LabelProps) => {
-    function isBlank(s) {
-        return /^\s*$/.test(s)
-    }
-
     const name = isBlank(props.name) ? "فلانة بنت فلان الفلاني" : props.name
     const profession = isBlank(props.profession) ? "فلاحة" : props.profession
     const traits = isBlank(props.traits) ? "سطر 1\nسطر 2" : props.traits
