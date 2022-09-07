@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Typography} from "@mui/material";
 import {Person} from "@mui/icons-material";
-import {isBlank} from "./utils";
+import {constrain, isBlank} from "./utils";
 
 interface ImageProps {
     imageSrc: string
@@ -24,27 +24,30 @@ const rootStyles = {
     overflow: "hidden",
 }
 
-const imageStyles = (props: ImageProps) => ({
-    flex: "0 1 50%",
-    position: "relative",
-    backgroundColor: "lightGray",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflow: "hidden",
-    [`& img`]: {
-        width: `${props.zoom + 100}%`,
-        height: `${props.zoom + 100}%`,
-        objectFit: "cover",
-        position: "absolute",
-        top: `-${Math.max(0, Math.min(props.zoom, props.panFromTop))}%`,
-        left: `-${Math.max(0, Math.min(props.zoom, props.panFromLeft))}%`,
-    },
-    [`& .MuiSvgIcon-root`]: {
-        width: "50%",
-        height: "50%",
-    },
-})
+const imageStyles = (props: ImageProps) => {
+    const zoomedWidth = 100 / props.zoom;
+    return ({
+        flex: "0 1 50%",
+        position: "relative",
+        backgroundColor: "lightGray",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+        [`& img`]: {
+            width: `${props.zoom * 100}%`,
+            height: `${props.zoom * 100}%`,
+            objectFit: "cover",
+            position: "absolute",
+            top: `${constrain(-(100 - zoomedWidth) * props.zoom, -(props.panFromTop) * props.zoom, 0)}%`,
+            left: `${constrain(-(100 - zoomedWidth) * props.zoom, -(props.panFromLeft) * props.zoom, 0)}%`,
+        },
+        [`& .MuiSvgIcon-root`]: {
+            width: "50%",
+            height: "50%",
+        },
+    });
+}
 
 const labelColor = `#b56968`;
 
