@@ -97,7 +97,7 @@ function App() {
                     width: Math.min(100, 100 * percentBasedAspectRatio),
                     height: Math.min(100, 100 / percentBasedAspectRatio),
                 })
-            }, 50)
+            }, 500)
         }
     }, [])
 
