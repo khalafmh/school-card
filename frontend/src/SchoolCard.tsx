@@ -32,7 +32,8 @@ const imageStyles = {
     overflow: "hidden",
     [`& img`]: {
         width: `100%`,
-        objectFit: "contain",
+        height: `100%`,
+        objectFit: "cover",
     },
     [`& .MuiSvgIcon-root`]: {
         width: "50%",
@@ -88,9 +89,9 @@ const CardLabels = (props: LabelProps) => {
     );
 }
 
-export const SchoolCard = (props: ImageProps & LabelProps) => (
-    <Box sx={rootStyles} className={"school-card"}>
+export const SchoolCard = React.forwardRef((props: ImageProps & LabelProps, ref: any) => (
+    <Box ref={ref} sx={rootStyles} className={"school-card"}>
         <CardImage imageSrc={props.imageSrc}/>
         <CardLabels name={props.name} profession={props.profession} traits={props.traits}/>
     </Box>
-)
+))

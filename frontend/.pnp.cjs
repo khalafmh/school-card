@@ -40,9 +40,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@emotion/styled", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:11.10.4"],
             ["@mui/icons-material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.3"],
             ["@mui/material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.4"],
+            ["@types/dom-to-image", "npm:2.6.4"],
             ["@types/react", "npm:18.0.18"],
             ["@types/react-dom", "npm:18.0.6"],
             ["@vitejs/plugin-react", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:2.1.0"],
+            ["dom-to-image", "npm:2.6.0"],
             ["react", "npm:18.2.0"],
             ["react-dom", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:18.2.0"],
             ["react-image-crop", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:10.0.6"],
@@ -1084,6 +1086,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD",
         }]
       ]],
+      ["@types/dom-to-image", [
+        ["npm:2.6.4", {
+          "packageLocation": "./.yarn/cache/@types-dom-to-image-npm-2.6.4-0df01bbccc-ddc8d74b94.zip/node_modules/@types/dom-to-image/",
+          "packageDependencies": [
+            ["@types/dom-to-image", "npm:2.6.4"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
       ["@types/parse-json", [
         ["npm:4.0.0", {
           "packageLocation": "./.yarn/cache/@types-parse-json-npm-4.0.0-298522afa6-fd6bce2b67.zip/node_modules/@types/parse-json/",
@@ -1536,6 +1547,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dom-helpers", "npm:5.2.1"],
             ["@babel/runtime", "npm:7.19.0"],
             ["csstype", "npm:3.1.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["dom-to-image", [
+        ["npm:2.6.0", {
+          "packageLocation": "./.yarn/unplugged/dom-to-image-npm-2.6.0-8af9792314/node_modules/dom-to-image/",
+          "packageDependencies": [
+            ["dom-to-image", "npm:2.6.0"]
           ],
           "linkType": "HARD",
         }]
@@ -2818,9 +2838,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@emotion/styled", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:11.10.4"],
             ["@mui/icons-material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.3"],
             ["@mui/material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.4"],
+            ["@types/dom-to-image", "npm:2.6.4"],
             ["@types/react", "npm:18.0.18"],
             ["@types/react-dom", "npm:18.0.6"],
             ["@vitejs/plugin-react", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:2.1.0"],
+            ["dom-to-image", "npm:2.6.0"],
             ["react", "npm:18.2.0"],
             ["react-dom", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:18.2.0"],
             ["react-image-crop", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:10.0.6"],

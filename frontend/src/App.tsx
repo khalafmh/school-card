@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {Box, Button, createTheme, Dialog, TextField, Theme, ThemeProvider, Typography} from "@mui/material";
 import {SchoolCard} from "./SchoolCard";
 import {CacheProvider} from "@emotion/react";
@@ -10,6 +10,7 @@ import {cropImagePercent} from "./utils";
 import {aspectRatio, imageToCardRatio} from "./constants";
 import ReactCrop, {Crop} from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import domtoimage from 'dom-to-image';
 
 const theme = createTheme({
     direction: "rtl",
@@ -61,8 +62,10 @@ function App() {
     const [traits, setTraits] = useState("")
     const [image, setImage] = useState("")
     const [cardImageData, setCardImageData] = useState("")
+    const [downloadDataUrl, setDownloadDataUrl] = useState("")
     const [imageDialogOpen, setImageDialogOpen] = useState(false)
     const [crop, setCrop] = useState<Crop>()
+    const schoolCardRef = useRef<HTMLDivElement>()
     const originalImageRef = useCallback(node => {
         if (node != null) {
             setTimeout(() => {
@@ -80,12 +83,23 @@ function App() {
         }
     }, [])
 
+    useEffect(() => {
+        if (schoolCardRef.current == null) {
+            return
+        }
+        domtoimage.toPng(schoolCardRef.current)
+            .then(dataUrl => {
+                setDownloadDataUrl(dataUrl)
+            })
+    }, [name, profession, traits, cardImageData])
+
     return (
         <ThemeProvider theme={theme}>
             <RTL>
                 <Box sx={rootStyles}>
                     <Typography variant={"h2"} component={"h1"} align={"center"}>بطاقة الطالبة</Typography>
                     <SchoolCard
+                        ref={schoolCardRef}
                         imageSrc={cardImageData}
                         name={name}
                         profession={profession}
@@ -128,7 +142,15 @@ function App() {
                             value={traits}
                             onChange={e => setTraits(e.target.value)}
                         />
-                        <Button variant={"contained"} className={"default-width"}>حفظ</Button>
+                        <Button
+                            variant={"contained"}
+                            className={"default-width"}
+                            component={"a"}
+                            download={"بطاقة الطالبة.png"}
+                            href={downloadDataUrl}
+                        >
+                            حفظ
+                        </Button>
                     </form>
                     <Dialog open={imageDialogOpen}>
                         <Box sx={dialogStyles}>
