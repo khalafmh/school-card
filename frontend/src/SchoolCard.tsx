@@ -47,7 +47,7 @@ const labelsContainerStyles = {
     flex: "1 1 auto",
     p: "2vw",
     ["& .MuiTypography-root"]: {
-        fontFamily: "'Noto Naskh Arabic', serif",
+        fontFamily: "'Noto Naskh Arabic', sans-serif",
     },
     ["& .MuiTypography-h5"]: {
         color: labelColor,

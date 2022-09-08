@@ -11,6 +11,7 @@ import {aspectRatio, imageToCardRatio} from "./constants";
 import ReactCrop, {Crop} from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import domtoimage from 'dom-to-image';
+import {ContactMeList} from "./components/ContactMeList";
 
 const theme = createTheme({
     direction: "rtl",
@@ -27,6 +28,23 @@ function RTL(props) {
 
 const rootStyles = (theme: Theme) => ({
     minHeight: "inherit",
+    backgroundColor: theme.palette.grey.A200,
+    ["& .footer"]: {
+        backgroundColor: "#222222",
+        color: "white",
+        p: "8px",
+        fontFamily: "'Noto Naskh Arabic', Roboto, sans-serif",
+        ["& p:first-of-type"]: {
+            mt: 0,
+        },
+        ["& p:last-of-type"]: {
+            mb: 0,
+        },
+    },
+})
+
+const mainStyles = (theme: Theme) => ({
+    minHeight: "inherit",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -34,7 +52,6 @@ const rootStyles = (theme: Theme) => ({
     gap: "16px",
     px: "8px",
     py: "48px",
-    backgroundColor: theme.palette.grey.A200,
     ["& > form"]: {
         display: "contents",
     },
@@ -98,61 +115,71 @@ function App() {
         <ThemeProvider theme={theme}>
             <RTL>
                 <Box sx={rootStyles}>
-                    <Typography variant={"h2"} component={"h1"} align={"center"}>بطاقة الطالبة</Typography>
-                    <SchoolCard
-                        ref={schoolCardRef}
-                        imageSrc={cardImageData}
-                        name={name}
-                        profession={profession}
-                        traits={traits}
-                    />
-                    <form>
-                        <Button variant={"outlined"} startIcon={<UploadFile/>} component="label">
-                            الصورة
-                            <input
-                                hidden
-                                type={"file"}
-                                accept={"image/jpeg,image/png,.jpg,.jpeg,.png"}
-                                onClick={e => (e.target as HTMLInputElement).value = ""}
-                                onInput={e => {
-                                    const target = e.target as HTMLInputElement;
-                                    if (target.files?.[0] != null) {
-                                        setImage(URL.createObjectURL(target.files?.[0]))
-                                        setImageDialogOpen(true)
-                                    }
-                                }}
+                    <Box sx={mainStyles}>
+                        <Typography variant={"h2"} component={"h1"} align={"center"}>بطاقة الطالبة</Typography>
+                        <SchoolCard
+                            ref={schoolCardRef}
+                            imageSrc={cardImageData}
+                            name={name}
+                            profession={profession}
+                            traits={traits}
+                        />
+                        <form>
+                            <Button variant={"outlined"} startIcon={<UploadFile/>} component="label">
+                                الصورة
+                                <input
+                                    hidden
+                                    type={"file"}
+                                    accept={"image/jpeg,image/png,.jpg,.jpeg,.png"}
+                                    onClick={e => (e.target as HTMLInputElement).value = ""}
+                                    onInput={e => {
+                                        const target = e.target as HTMLInputElement;
+                                        if (target.files?.[0] != null) {
+                                            setImage(URL.createObjectURL(target.files?.[0]))
+                                            setImageDialogOpen(true)
+                                        }
+                                    }}
+                                />
+                            </Button>
+                            <TextField
+                                variant={"filled"}
+                                label={"الاسم"}
+                                value={name}
+                                onChange={e => setName(e.target.value)}
                             />
-                        </Button>
-                        <TextField
-                            variant={"filled"}
-                            label={"الاسم"}
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                        />
-                        <TextField
-                            variant={"filled"}
-                            label={"المهنة المستقبلية"}
-                            value={profession}
-                            onChange={e => setProfession(e.target.value)}
-                        />
-                        <TextField
-                            variant={"filled"}
-                            label={"الصفات"}
-                            multiline
-                            minRows={2}
-                            value={traits}
-                            onChange={e => setTraits(e.target.value)}
-                        />
-                        <Button
-                            variant={"contained"}
-                            className={"default-width"}
-                            component={"a"}
-                            download={"بطاقة الطالبة.png"}
-                            href={downloadDataUrl}
-                        >
-                            حفظ
-                        </Button>
-                    </form>
+                            <TextField
+                                variant={"filled"}
+                                label={"المهنة المستقبلية"}
+                                value={profession}
+                                onChange={e => setProfession(e.target.value)}
+                            />
+                            <TextField
+                                variant={"filled"}
+                                label={"الصفات"}
+                                multiline
+                                minRows={2}
+                                value={traits}
+                                onChange={e => setTraits(e.target.value)}
+                            />
+                            <Button
+                                variant={"contained"}
+                                className={"default-width"}
+                                component={"a"}
+                                download={"بطاقة الطالبة.png"}
+                                href={downloadDataUrl}
+                            >
+                                حفظ
+                            </Button>
+                        </form>
+                    </Box>
+                    <Box className={"footer"}>
+                        <p>
+                            تطوير: مهدي الخلف
+                            <br/>
+                            للتواصل:
+                        </p>
+                        <ContactMeList/>
+                    </Box>
                     <Dialog open={imageDialogOpen}>
                         <Box sx={dialogStyles}>
                             <ReactCrop
