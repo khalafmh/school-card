@@ -1,8 +1,8 @@
 import React from "react";
 import {Box, Typography} from "@mui/material";
 import {Person} from "@mui/icons-material";
-import {isBlank} from "./utils";
-import {aspectRatio, imageToCardRatio} from "./constants";
+import {isBlank} from "../utils";
+import {aspectRatio, imageToCardRatio} from "../constants";
 
 interface ImageProps {
     imageSrc: string

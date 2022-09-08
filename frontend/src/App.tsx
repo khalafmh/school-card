@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {Box, Button, createTheme, Dialog, TextField, Theme, ThemeProvider, Typography} from "@mui/material";
-import {SchoolCard} from "./SchoolCard";
+import {SchoolCard} from "./components/SchoolCard";
 import {CacheProvider} from "@emotion/react";
 import createCache from "@emotion/cache";
 import {prefixer} from 'stylis';
@@ -97,7 +97,7 @@ function App() {
                     width: Math.min(100, 100 * percentBasedAspectRatio),
                     height: Math.min(100, 100 / percentBasedAspectRatio),
                 })
-            }, 10)
+            }, 50)
         }
     }, [])
 
