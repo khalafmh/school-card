@@ -2,6 +2,7 @@ import React from "react";
 import {Box, Typography} from "@mui/material";
 import {Person} from "@mui/icons-material";
 import {constrain, isBlank} from "./utils";
+import {imageToCardRatio} from "./constants";
 
 interface ImageProps {
     imageSrc: string
@@ -27,7 +28,7 @@ const rootStyles = {
 const imageStyles = (props: ImageProps) => {
     const zoomedWidth = 100 / props.zoom;
     return ({
-        flex: "0 1 50%",
+        flex: `0 1 ${imageToCardRatio * 100}%`,
         position: "relative",
         backgroundColor: "lightGray",
         display: "flex",

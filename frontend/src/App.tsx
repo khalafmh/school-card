@@ -7,6 +7,7 @@ import {prefixer} from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
 import {UploadFile} from "@mui/icons-material";
 import {constrain} from "./utils";
+import {aspectRatio, imageToCardRatio} from "./constants";
 
 const cornerWidth = 5;
 
@@ -61,17 +62,17 @@ const dialogStyles = {
     p: "8px",
     ["& .image-container"]: {
         position: "relative",
+        overflow: "hidden",
         ["& img"]: {
             width: "100%",
-            objectFit: "contain"
+            objectFit: "contain",
         },
         ["& .image-area-selection"]: {
             position: "absolute",
-            width: "100%",
-            height: "100%",
-            top: "0%",
-            left: "0%",
+            minWidth: "5%",
+            minHeight: "5%",
             cursor: "grab",
+            outline: "#000000aa 100vw solid",
             ["& .corner"]: {
                 position: "absolute",
                 width: `${cornerWidth}%`,
@@ -83,7 +84,7 @@ const dialogStyles = {
 
 const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageCropValues) => void }) => {
     const {panFromTop, panFromLeft, width, height} = props
-    const cornerColor = "black"
+    const cornerColor = "#000000ff"
     const cornerThickness = "4px"
     const ref = useRef<HTMLElement>()
     const topLeftRef = useRef<HTMLElement>()
@@ -98,19 +99,24 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
             const parent = ref.current.parentElement;
             const parentRect = parent.getBoundingClientRect();
             const baseX = parentRect.right
-            const baseY = ref.current.getBoundingClientRect().y
+            const baseY = parentRect.top
             const parentDragoverListener = e => e.preventDefault();
             parent.addEventListener("dragover", parentDragoverListener, {signal: abortSignal})
-            // ref.current.addEventListener("drag", e => {
-            //     // TODO
-            //     console.log(e)
-            //     props.onChange({
-            //         panFromLeft: ((baseX - e.clientX) / parentRect.width) * 100,
-            //         panFromTop: ((e.clientY - baseY) / parentRect.height) * 100,
-            //         width: width,
-            //         height: height,
-            //     })
-            // })
+            ref.current.addEventListener("dragstart", e => {
+                e.dataTransfer.setDragImage(document.createElement("div"), 0, 0)
+                e.dataTransfer.effectAllowed = "move"
+            }, {signal: abortSignal})
+            ref.current.addEventListener("drag", e => {
+                if (e.clientX === 0 || e.clientY === 0) {
+                    return
+                }
+                props.onChange({
+                    panFromLeft: ((baseX - e.clientX) / parentRect.width) * 100 - 0.5 * width,
+                    panFromTop: ((e.clientY - baseY) / parentRect.height) * 100 - 0.5 * height,
+                    width: width,
+                    height: height,
+                });
+            }, {signal: abortSignal})
             const cornerDragStartListeners = Array.from(ref.current.children).map(() =>
                 e => {
                     e.dataTransfer.setDragImage(document.createElement("div"), 0, 0)
@@ -119,6 +125,7 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
             )
             const cornerDragListeners = Array.from(ref.current.children).map(corner =>
                 (e: MouseEvent) => {
+                    e.stopPropagation()
                     const newRawPanFromLeft = corner === topLeftRef.current || corner === bottomLeftRef.current
                         ? ((baseX - e.clientX) / parentRect.width) * 100
                         : panFromLeft;
@@ -131,9 +138,7 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
                         ? width - (newPanFromLeft - panFromLeft)
                         : ((baseX - e.clientX) / parentRect.width) * 100 - newPanFromLeft
                     const newWidth = constrain(2 * cornerWidth, newRawWidth, 100 - newPanFromLeft)
-                    const newRawHeight = corner === topLeftRef.current || corner === topRightRef.current
-                        ? height + panFromTop - newPanFromTop
-                        : ((e.clientY - baseY) / parentRect.height) * 100 - newPanFromTop
+                    const newRawHeight = newWidth / (aspectRatio * imageToCardRatio)
                     const newHeight = constrain(2 * cornerWidth, newRawHeight, 100 - newPanFromTop)
                     props.onChange({
                         panFromLeft: newPanFromLeft,
@@ -154,8 +159,8 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
 
     const topLeft = (
         <Box className={"corner"} ref={topLeftRef} draggable sx={{
-            top: `${panFromTop}%`,
-            left: `${panFromLeft}%`,
+            top: `0`,
+            left: `0`,
             borderTop: `${cornerColor} ${cornerThickness} solid`,
             borderLeft: `${cornerColor} ${cornerThickness} solid`,
             cursor: "nesw-resize",
@@ -163,8 +168,8 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
     )
     const topRight = (
         <Box className={"corner"} ref={topRightRef} draggable sx={{
-            top: `${panFromTop}%`,
-            left: `calc(${width}% - ${cornerWidth}% + ${panFromLeft}%)`,
+            top: `0`,
+            right: `0`,
             borderTop: `${cornerColor} ${cornerThickness} solid`,
             borderRight: `${cornerColor} ${cornerThickness} solid`,
             cursor: "nwse-resize",
@@ -172,8 +177,8 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
     )
     const bottomRight = (
         <Box className={"corner"} ref={bottomRightRef} draggable sx={{
-            top: `calc(${height}% - ${cornerWidth}% - ${cornerThickness} + ${panFromTop}%)`,
-            left: `calc(${width}% - ${cornerWidth}% + ${panFromLeft}%)`,
+            bottom: `0`,
+            right: `0`,
             borderBottom: `${cornerColor} ${cornerThickness} solid`,
             borderRight: `${cornerColor} ${cornerThickness} solid`,
             cursor: "nesw-resize",
@@ -181,8 +186,8 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
     )
     const bottomLeft = (
         <Box className={"corner"} ref={bottomLeftRef} draggable sx={{
-            top: `calc(${height}% - ${cornerWidth}% - ${cornerThickness} + ${panFromTop}%)`,
-            left: `${panFromLeft}%`,
+            bottom: `0`,
+            left: `0`,
             borderBottom: `${cornerColor} ${cornerThickness} solid`,
             borderLeft: `${cornerColor} ${cornerThickness} solid`,
             cursor: "nwse-resize",
@@ -190,7 +195,12 @@ const ImageAreaSelection = (props: ImageCropValues & { onChange: (values: ImageC
     )
 
     return (
-        <Box className={"image-area-selection"} ref={ref}>
+        <Box className={"image-area-selection"} ref={ref} draggable sx={{
+            width: `${width}%`,
+            height: `${height}%`,
+            top: `${panFromTop}%`,
+            left: `${panFromLeft}%`,
+        }}>
             {topLeft}
             {topRight}
             {bottomRight}
