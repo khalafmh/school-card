@@ -40,9 +40,10 @@ const rootStyles = (theme: Theme) => ({
     },
     ["& .school-card"]: {
         boxShadow: 10,
+        width: ["80vw"],
     },
     ["& > *, & > form > :not(.default-width)"]: {
-        width: ["80vw"],
+        width: ["80vw", "60vw", "50vw", "40vw"],
     },
 })
 
