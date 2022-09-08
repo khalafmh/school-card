@@ -1,14 +1,11 @@
 import React from "react";
 import {Box, Typography} from "@mui/material";
 import {Person} from "@mui/icons-material";
-import {constrain, isBlank} from "./utils";
-import {imageToCardRatio} from "./constants";
+import {isBlank} from "./utils";
+import {aspectRatio, imageToCardRatio} from "./constants";
 
 interface ImageProps {
     imageSrc: string
-    zoom: number
-    panFromTop: number
-    panFromLeft: number
 }
 
 interface LabelProps {
@@ -20,34 +17,27 @@ interface LabelProps {
 const rootStyles = {
     display: "flex",
     flexDirection: "row",
-    aspectRatio: "12 / 7",
+    aspectRatio: aspectRatio.toString(),
     backgroundColor: "white",
     overflow: "hidden",
 }
 
-const imageStyles = (props: ImageProps) => {
-    const zoomedWidth = 100 / props.zoom;
-    return ({
-        flex: `0 1 ${imageToCardRatio * 100}%`,
-        position: "relative",
-        backgroundColor: "lightGray",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "hidden",
-        [`& img`]: {
-            width: `${props.zoom * 100}%`,
-            height: `${props.zoom * 100}%`,
-            objectFit: "cover",
-            position: "absolute",
-            top: `${constrain(-(100 - zoomedWidth) * props.zoom, -(props.panFromTop) * props.zoom, 0)}%`,
-            left: `${constrain(-(100 - zoomedWidth) * props.zoom, -(props.panFromLeft) * props.zoom, 0)}%`,
-        },
-        [`& .MuiSvgIcon-root`]: {
-            width: "50%",
-            height: "50%",
-        },
-    });
+const imageStyles = {
+    flex: `0 1 ${imageToCardRatio * 100}%`,
+    position: "relative",
+    backgroundColor: "lightGray",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    [`& img`]: {
+        width: `100%`,
+        objectFit: "contain",
+    },
+    [`& .MuiSvgIcon-root`]: {
+        width: "50%",
+        height: "50%",
+    },
 }
 
 const labelColor = `#b56968`;
@@ -74,7 +64,7 @@ const labelsContainerStyles = {
 }
 
 const CardImage = (props: ImageProps) => (
-    <Box sx={imageStyles(props)}>
+    <Box sx={imageStyles}>
         {isBlank(props.imageSrc) ? <Person/> : <img src={props.imageSrc} alt={"صورة الطالبة"}/>}
     </Box>
 )
@@ -98,11 +88,9 @@ const CardLabels = (props: LabelProps) => {
     );
 }
 
-export const SchoolCard = (props: ImageProps & LabelProps) => {
-    return (
-        <Box sx={rootStyles} className={"school-card"}>
-            <CardImage {...props}/>
-            <CardLabels name={props.name} profession={props.profession} traits={props.traits}/>
-        </Box>
-    )
-}
+export const SchoolCard = (props: ImageProps & LabelProps) => (
+    <Box sx={rootStyles} className={"school-card"}>
+        <CardImage imageSrc={props.imageSrc}/>
+        <CardLabels name={props.name} profession={props.profession} traits={props.traits}/>
+    </Box>
+)
