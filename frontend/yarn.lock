@@ -275,7 +275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.18.9, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.7":
   version: 7.19.0
   resolution: "@babel/runtime@npm:7.19.0"
   dependencies:
@@ -758,6 +758,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/history@npm:^4.7.11":
+  version: 4.7.11
+  resolution: "@types/history@npm:4.7.11"
+  checksum: c92e2ba407dcab0581a9afdf98f533aa41b61a71133420a6d92b1ca9839f741ab1f9395b17454ba5b88cb86020b70b22d74a1950ccfbdfd9beeaa5459fdc3464
+  languageName: node
+  linkType: hard
+
 "@types/parse-json@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/parse-json@npm:4.0.0"
@@ -790,6 +797,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-router-dom@npm:^5.3.3":
+  version: 5.3.3
+  resolution: "@types/react-router-dom@npm:5.3.3"
+  dependencies:
+    "@types/history": ^4.7.11
+    "@types/react": "*"
+    "@types/react-router": "*"
+  checksum: 28c4ea48909803c414bf5a08502acbb8ba414669b4b43bb51297c05fe5addc4df0b8fd00e0a9d1e3535ec4073ef38aaafac2c4a2b95b787167d113bc059beff3
+  languageName: node
+  linkType: hard
+
+"@types/react-router@npm:*":
+  version: 5.1.18
+  resolution: "@types/react-router@npm:5.1.18"
+  dependencies:
+    "@types/history": ^4.7.11
+    "@types/react": "*"
+  checksum: f08b37ee822f9f9ff904ffd0778fe2bb7c717ed3ee311610382ee024d02a35169bd3301ecde863cac21aae8fdee919501e8ea22bad0260c02c10cfbdba5c71be
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "@types/react-transition-group@npm:4.4.5"
@@ -817,7 +845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^2.0.1":
+"@vitejs/plugin-react@npm:^2.1.0":
   version: 2.1.0
   resolution: "@vitejs/plugin-react@npm:2.1.0"
   dependencies:
@@ -1146,9 +1174,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.202":
-  version: 1.4.244
-  resolution: "electron-to-chromium@npm:1.4.244"
-  checksum: f9d6f9a389c34d5b9479e77b72f611049241bb1fa1f1b5a38ef3cfe6e78b5108d1a1c6452f6c62bddba1263c35d3ae6b0cd495bb9a94355e911470a0d473d7c4
+  version: 1.4.247
+  resolution: "electron-to-chromium@npm:1.4.247"
+  checksum: cbe17a6164f5baceb91b09d7d0f09b3d2ce1f0fc3a3c2494622694cb518aa5192cf490aac597ee6dc4cbfb004109d0a214b465c9047e53130a89282aa14b752e
   languageName: node
   linkType: hard
 
@@ -1559,6 +1587,15 @@ __metadata:
   dependencies:
     function-bind: ^1.1.1
   checksum: b9ad53d53be4af90ce5d1c38331e712522417d017d5ef1ebd0507e07c2fbad8686fffb8e12ddecd4c39ca9b9b47431afbb975b8abf7f3c3b82c98e9aad052792
+  languageName: node
+  linkType: hard
+
+"history@npm:^5.2.0":
+  version: 5.3.0
+  resolution: "history@npm:5.3.0"
+  dependencies:
+    "@babel/runtime": ^7.7.6
+  checksum: d73c35df49d19ac172f9547d30a21a26793e83f16a78386d99583b5bf1429cc980799fcf1827eb215d31816a6600684fba9686ce78104e23bd89ec239e7c726f
   languageName: node
   linkType: hard
 
@@ -2142,6 +2179,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router-dom@npm:6":
+  version: 6.3.0
+  resolution: "react-router-dom@npm:6.3.0"
+  dependencies:
+    history: ^5.2.0
+    react-router: 6.3.0
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 77603a654f8a8dc7f65535a2e5917a65f8d9ffcb06546d28dd297e52adcc4b8a84377e0115f48dca330b080af2da3e78f29d590c89307094d36927d2b1751ec3
+  languageName: node
+  linkType: hard
+
+"react-router@npm:6.3.0":
+  version: 6.3.0
+  resolution: "react-router@npm:6.3.0"
+  dependencies:
+    history: ^5.2.0
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 7be673f5e72104be01e6ab274516bdb932efd93305243170690f6560e3bd1035dd1df3d3c9ce1e0f452638a2529f43a1e77dcf0934fc8031c4783da657be13ca
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -2291,15 +2352,17 @@ __metadata:
     "@types/dom-to-image": ^2.6.4
     "@types/react": ^18.0.18
     "@types/react-dom": ^18.0.6
-    "@vitejs/plugin-react": ^2.0.1
+    "@types/react-router-dom": ^5.3.3
+    "@vitejs/plugin-react": ^2.1.0
     dom-to-image: ^2.6.0
     react: ^18.2.0
     react-dom: ^18.2.0
     react-image-crop: ^10.0.6
+    react-router-dom: 6
     stylis: ^4.1.1
     stylis-plugin-rtl: ^2.1.1
     typescript: ^4.6.4
-    vite: ^3.0.7
+    vite: ^3.1.0
   languageName: unknown
   linkType: soft
 
@@ -2545,7 +2608,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.0.7":
+"vite@npm:^3.1.0":
   version: 3.1.0
   resolution: "vite@npm:3.1.0"
   dependencies:
