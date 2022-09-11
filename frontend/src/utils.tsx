@@ -1,3 +1,5 @@
+import {backendUrl} from "./constants";
+
 export function isBlank(s: any) {
     return /^\s*$/.test(s)
 }
@@ -45,4 +47,37 @@ export async function cropImagePercent(
         })
     })
     return await promise
+}
+
+export async function initiateDownload(name: string, profession: string, traits: string, imageDataUrl: string) {
+    return fetch(`${backendUrl}/api/render-card`, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name,
+            profession,
+            traits,
+            imageDataUrl,
+        }),
+    })
+        .then(async response => {
+            if (response.ok) {
+                const json = await response.json()
+                const {screenshotBase64} = json
+                const element = document.createElement("a")
+                element.download = "بطاقة الطالبة.png"
+                element.href = `data:image/png;base64,${screenshotBase64}`
+                element.click()
+                element.remove()
+                return null
+            } else {
+                return new Error(`failed to download file: ${response.status} ${response.statusText}`)
+            }
+        }).catch(err => {
+            err.message = `فشل التنزيل: ${err.message}`
+            return err
+        })
 }

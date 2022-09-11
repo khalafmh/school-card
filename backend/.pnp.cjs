@@ -34,10 +34,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@rollup/plugin-typescript", "virtual:740de88b9b4a0ab3f1b338d603adc4ea2a53e6afcef00796bf1caef53a5549ec500eb37837b6c58cfc78d3d268b5d62493fbf6f7dca5ee522a345a6e1a9f8c90#npm:8.5.0"],\
+            ["@types/body-parser", "npm:1.19.2"],\
+            ["@types/cors", "npm:2.8.12"],\
             ["@types/express", "npm:4.17.13"],\
             ["@types/node", "npm:18.7.16"],\
             ["@types/puppeteer", "npm:5.4.6"],\
             ["@types/rollup", "npm:0.54.0"],\
+            ["body-parser", "npm:1.20.0"],\
+            ["cors", "npm:2.8.5"],\
             ["express", "npm:4.18.1"],\
             ["http-errors", "npm:2.0.0"],\
             ["nodemon", "npm:2.0.19"],\
@@ -166,6 +170,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/connect", "npm:3.4.35"],\
             ["@types/node", "npm:18.7.16"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/cors", [\
+        ["npm:2.8.12", {\
+          "packageLocation": "./.yarn/cache/@types-cors-npm-2.8.12-ff52e8e514-8c45f112c7.zip/node_modules/@types/cors/",\
+          "packageDependencies": [\
+            ["@types/cors", "npm:2.8.12"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -669,6 +682,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/cookie-signature-npm-1.0.6-93f325f7f0-f4e1b0a98a.zip/node_modules/cookie-signature/",\
           "packageDependencies": [\
             ["cookie-signature", "npm:1.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["cors", [\
+        ["npm:2.8.5", {\
+          "packageLocation": "./.yarn/cache/cors-npm-2.8.5-c9935a2d12-ced838404c.zip/node_modules/cors/",\
+          "packageDependencies": [\
+            ["cors", "npm:2.8.5"],\
+            ["object-assign", "npm:4.1.1"],\
+            ["vary", "npm:1.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1824,6 +1848,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["object-assign", [\
+        ["npm:4.1.1", {\
+          "packageLocation": "./.yarn/cache/object-assign-npm-4.1.1-1004ad6dec-fcc6e4ea8c.zip/node_modules/object-assign/",\
+          "packageDependencies": [\
+            ["object-assign", "npm:4.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["object-inspect", [\
         ["npm:1.12.2", {\
           "packageLocation": "./.yarn/cache/object-inspect-npm-1.12.2-f125a822c0-a534fc1b85.zip/node_modules/object-inspect/",\
@@ -2277,10 +2310,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["school-card-backend", "workspace:."],\
             ["@rollup/plugin-typescript", "virtual:740de88b9b4a0ab3f1b338d603adc4ea2a53e6afcef00796bf1caef53a5549ec500eb37837b6c58cfc78d3d268b5d62493fbf6f7dca5ee522a345a6e1a9f8c90#npm:8.5.0"],\
+            ["@types/body-parser", "npm:1.19.2"],\
+            ["@types/cors", "npm:2.8.12"],\
             ["@types/express", "npm:4.17.13"],\
             ["@types/node", "npm:18.7.16"],\
             ["@types/puppeteer", "npm:5.4.6"],\
             ["@types/rollup", "npm:0.54.0"],\
+            ["body-parser", "npm:1.20.0"],\
+            ["cors", "npm:2.8.5"],\
             ["express", "npm:4.18.1"],\
             ["http-errors", "npm:2.0.0"],\
             ["nodemon", "npm:2.0.19"],\

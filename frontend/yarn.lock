@@ -751,13 +751,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/dom-to-image@npm:^2.6.4":
-  version: 2.6.4
-  resolution: "@types/dom-to-image@npm:2.6.4"
-  checksum: ddc8d74b944909040a6e6d9ca2feb246b50dc8c3ad908a90634fb6e46e4c438b47aa0a5df4994bd19c1d6f110eb90a15146d1c1a7b8762ab9d050f70e6de4050
-  languageName: node
-  linkType: hard
-
 "@types/history@npm:^4.7.11":
   version: 4.7.11
   resolution: "@types/history@npm:4.7.11"
@@ -842,6 +835,13 @@ __metadata:
   version: 0.16.2
   resolution: "@types/scheduler@npm:0.16.2"
   checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
+  languageName: node
+  linkType: hard
+
+"@types/stylis@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@types/stylis@npm:4.0.2"
+  checksum: 5461290afd6e7fbbd713f4896b4c586fa6f3072ef8addcb062feaf112a50168477df98ab474d9b603b19b879696aab6932c5f0bb3cda7472ab9c1622ee7fea60
   languageName: node
   linkType: hard
 
@@ -1163,13 +1163,6 @@ __metadata:
     "@babel/runtime": ^7.8.7
     csstype: ^3.0.2
   checksum: 863ba9e086f7093df3376b43e74ce4422571d404fc9828bf2c56140963d5edf0e56160f9b2f3bb61b282c07f8fc8134f023c98fd684bddcb12daf7b0f14d951c
-  languageName: node
-  linkType: hard
-
-"dom-to-image@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "dom-to-image@npm:2.6.0"
-  checksum: 0d1f450b776d36f3ec982783d2a3898baaa3697f135ed0a9c70085db6bc5ac6def02f5ed7affc6acb92ef4fb3248905fabec915fed541994383d317260f784a2
   languageName: node
   linkType: hard
 
@@ -2349,12 +2342,11 @@ __metadata:
     "@emotion/styled": ^11.10.4
     "@mui/icons-material": ^5.10.3
     "@mui/material": ^5.10.3
-    "@types/dom-to-image": ^2.6.4
     "@types/react": ^18.0.18
     "@types/react-dom": ^18.0.6
     "@types/react-router-dom": ^5.3.3
+    "@types/stylis": ^4.0.2
     "@vitejs/plugin-react": ^2.1.0
-    dom-to-image: ^2.6.0
     react: ^18.2.0
     react-dom: ^18.2.0
     react-image-crop: ^10.0.6

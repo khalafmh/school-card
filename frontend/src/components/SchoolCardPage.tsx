@@ -1,13 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import {SchoolCard} from "./SchoolCard";
+import {Box} from "@mui/material";
+
+const hiddenInputStyles = {
+    opacity: 0,
+    position: "fixed",
+    left: 0,
+    top: 0,
+}
 
 export const SchoolCardPage = (props: any) => {
+    const [imageDataUrl, setImageDataUrl] = useState("")
+    console.log("update")
+    console.log(imageDataUrl)
+
     const queryParams = new URL(window.location.href).searchParams;
     const name = queryParams.get("name") ?? ""
     const profession = queryParams.get("profession") ?? ""
     const traits = queryParams.get("traits") ?? ""
-    const imageSrc = queryParams.get("imageSrc") ?? ""
     return (
-        <SchoolCard imageSrc={imageSrc} name={name} profession={profession} traits={traits}/>
+        <div>
+            <Box sx={hiddenInputStyles}>
+                <input
+                    id="imageDataUrl"
+                    type="text"
+                    value={imageDataUrl}
+                    onChange={e => setImageDataUrl(e.target.value)}
+                />
+            </Box>
+            <SchoolCard imageSrc={imageDataUrl} name={name} profession={profession} traits={traits}/>
+        </div>
     )
 }

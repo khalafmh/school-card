@@ -1,16 +1,26 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
-import {Box, Button, createTheme, Dialog, TextField, Theme, ThemeProvider, Typography} from "@mui/material";
+import React, {useCallback, useState} from "react";
+import {
+    Alert,
+    Box,
+    Button,
+    createTheme,
+    Dialog,
+    Snackbar,
+    TextField,
+    Theme,
+    ThemeProvider,
+    Typography
+} from "@mui/material";
 import {SchoolCard} from "./components/SchoolCard";
 import {CacheProvider} from "@emotion/react";
 import createCache from "@emotion/cache";
 import {prefixer} from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
 import {UploadFile} from "@mui/icons-material";
-import {cropImagePercent} from "./utils";
+import {cropImagePercent, initiateDownload} from "./utils";
 import {aspectRatio, imageToCardRatio} from "./constants";
 import ReactCrop, {Crop} from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import domtoimage from 'dom-to-image';
 import {ContactMeList} from "./components/ContactMeList";
 
 const theme = createTheme({
@@ -22,7 +32,7 @@ const cacheRtl = createCache({
     stylisPlugins: [prefixer, rtlPlugin],
 });
 
-function RTL(props) {
+function RTL(props: any) {
     return <CacheProvider value={cacheRtl}>{props.children as any}</CacheProvider>;
 }
 
@@ -80,11 +90,12 @@ function App() {
     const [traits, setTraits] = useState("")
     const [image, setImage] = useState("")
     const [cardImageData, setCardImageData] = useState("")
-    const [downloadDataUrl, setDownloadDataUrl] = useState("")
     const [imageDialogOpen, setImageDialogOpen] = useState(false)
     const [crop, setCrop] = useState<Crop>()
-    const schoolCardRef = useRef<HTMLDivElement>()
-    const originalImageRef = useCallback(node => {
+    const [error, setError] = useState<Error | null>(null)
+    const [infoMessage, setInfoMessage] = useState<string | null>(null)
+    const [successMessage, setSuccessMessage] = useState<string | null>(null)
+    const originalImageRef = useCallback((node: any) => {
         if (node != null) {
             setTimeout(() => {
                 const originalImageAspectRatio = node.width / node.height
@@ -101,16 +112,6 @@ function App() {
         }
     }, [])
 
-    useEffect(() => {
-        if (schoolCardRef.current == null) {
-            return
-        }
-        domtoimage.toPng(schoolCardRef.current)
-            .then(dataUrl => {
-                setDownloadDataUrl(dataUrl)
-            })
-    }, [name, profession, traits, cardImageData])
-
     return (
         <ThemeProvider theme={theme}>
             <RTL>
@@ -118,7 +119,6 @@ function App() {
                     <Box sx={mainStyles}>
                         <Typography variant={"h2"} component={"h1"} align={"center"}>بطاقة الطالبة</Typography>
                         <SchoolCard
-                            ref={schoolCardRef}
                             imageSrc={cardImageData}
                             name={name}
                             profession={profession}
@@ -164,9 +164,19 @@ function App() {
                             <Button
                                 variant={"contained"}
                                 className={"default-width"}
-                                component={"a"}
-                                download={"بطاقة الطالبة.png"}
-                                href={downloadDataUrl}
+                                onClick={async () => {
+                                    setInfoMessage("بانتظار التنزيل")
+                                    const error = await initiateDownload(name, profession, traits, cardImageData);
+                                    setInfoMessage(null)
+                                    setSuccessMessage(null)
+                                    setError(null)
+                                    if (error != null) {
+                                        console.error(error)
+                                        setError(error)
+                                    } else {
+                                        setSuccessMessage("تم التنزيل")
+                                    }
+                                }}
                             >
                                 حفظ
                             </Button>
@@ -194,6 +204,7 @@ function App() {
                                 variant={"contained"}
                                 onClick={async () => {
                                     setImageDialogOpen(false);
+                                    if (crop == null) return
                                     const croppedImageDataUrl = await cropImagePercent(
                                         image,
                                         crop.width,
@@ -208,6 +219,27 @@ function App() {
                             </Button>
                         </Box>
                     </Dialog>
+                    <Snackbar
+                        open={error != null}
+                        onClose={() => setError(null)}
+                        autoHideDuration={5000}
+                    >
+                        <Alert severity="error" onClose={() => setError(null)}>{error?.message}</Alert>
+                    </Snackbar>
+                    <Snackbar
+                        open={infoMessage != null}
+                        onClose={() => setInfoMessage(null)}
+                        autoHideDuration={5000}
+                    >
+                        <Alert severity="info" onClose={() => setInfoMessage(null)}>{infoMessage ?? ""}</Alert>
+                    </Snackbar>
+                    <Snackbar
+                        open={successMessage != null}
+                        onClose={() => setSuccessMessage(null)}
+                        autoHideDuration={5000}
+                    >
+                        <Alert severity="success" onClose={() => setSuccessMessage(null)}>{successMessage ?? ""}</Alert>
+                    </Snackbar>
                 </Box>
             </RTL>
         </ThemeProvider>

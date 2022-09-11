@@ -38,12 +38,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@emotion/styled", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:11.10.4"],\
             ["@mui/icons-material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.3"],\
             ["@mui/material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.4"],\
-            ["@types/dom-to-image", "npm:2.6.4"],\
             ["@types/react", "npm:18.0.18"],\
             ["@types/react-dom", "npm:18.0.6"],\
             ["@types/react-router-dom", "npm:5.3.3"],\
+            ["@types/stylis", "npm:4.0.2"],\
             ["@vitejs/plugin-react", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:2.1.0"],\
-            ["dom-to-image", "npm:2.6.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:18.2.0"],\
             ["react-image-crop", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:10.0.6"],\
@@ -1086,15 +1085,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@types/dom-to-image", [\
-        ["npm:2.6.4", {\
-          "packageLocation": "./.yarn/cache/@types-dom-to-image-npm-2.6.4-0df01bbccc-ddc8d74b94.zip/node_modules/@types/dom-to-image/",\
-          "packageDependencies": [\
-            ["@types/dom-to-image", "npm:2.6.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@types/history", [\
         ["npm:4.7.11", {\
           "packageLocation": "./.yarn/cache/@types-history-npm-4.7.11-fe05d7b2e1-c92e2ba407.zip/node_modules/@types/history/",\
@@ -1192,6 +1182,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-scheduler-npm-0.16.2-ba3a7d8c68-b6b4dcfeae.zip/node_modules/@types/scheduler/",\
           "packageDependencies": [\
             ["@types/scheduler", "npm:0.16.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/stylis", [\
+        ["npm:4.0.2", {\
+          "packageLocation": "./.yarn/cache/@types-stylis-npm-4.0.2-06fe62bb4d-5461290afd.zip/node_modules/@types/stylis/",\
+          "packageDependencies": [\
+            ["@types/stylis", "npm:4.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1579,15 +1578,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["dom-helpers", "npm:5.2.1"],\
             ["@babel/runtime", "npm:7.19.0"],\
             ["csstype", "npm:3.1.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["dom-to-image", [\
-        ["npm:2.6.0", {\
-          "packageLocation": "./.yarn/unplugged/dom-to-image-npm-2.6.0-8af9792314/node_modules/dom-to-image/",\
-          "packageDependencies": [\
-            ["dom-to-image", "npm:2.6.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2931,12 +2921,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@emotion/styled", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:11.10.4"],\
             ["@mui/icons-material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.3"],\
             ["@mui/material", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:5.10.4"],\
-            ["@types/dom-to-image", "npm:2.6.4"],\
             ["@types/react", "npm:18.0.18"],\
             ["@types/react-dom", "npm:18.0.6"],\
             ["@types/react-router-dom", "npm:5.3.3"],\
+            ["@types/stylis", "npm:4.0.2"],\
             ["@vitejs/plugin-react", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:2.1.0"],\
-            ["dom-to-image", "npm:2.6.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:18.2.0"],\
             ["react-image-crop", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:10.0.6"],\
@@ -3113,7 +3102,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/__virtual__/stylis-plugin-rtl-virtual-76f5e43eea/0/cache/stylis-plugin-rtl-npm-2.1.1-03f0c0e6dc-262d2c7622.zip/node_modules/stylis-plugin-rtl/",\
           "packageDependencies": [\
             ["stylis-plugin-rtl", "virtual:61b5b4aecd95795d4ff2107f50a01a60555947493565cd5bf751e4970430c768bb5012d2d7f8477dc14121da9efe76295b31e4e33f3f7533e3fe2e52bdda0d3b#npm:2.1.1"],\
-            ["@types/stylis", null],\
+            ["@types/stylis", "npm:4.0.2"],\
             ["cssjanus", "npm:2.1.0"],\
             ["stylis", "npm:4.1.1"]\
           ],\
