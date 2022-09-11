@@ -1,0 +1,11 @@
+.git
+dist
+.rollup.cache
+
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/versions
+!.yarn/sdks
+!.yarn/plugins
+!.yarn/patches
