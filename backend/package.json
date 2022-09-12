@@ -10,7 +10,7 @@
     "watch": "rollup --config --watch",
     "build": "rollup --config",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run:prod": "node dist/main.js"
+    "start:prod": "node dist/main.js"
   },
   "dependencies": {
     "body-parser": "^1.20.0",

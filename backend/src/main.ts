@@ -2,11 +2,13 @@ import express, {Request, Response} from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import puppeteer, {Page} from "puppeteer";
+import * as process from "process";
 
 const frontendUrl = process.env.FRONTEND_URL || "http://127.0.0.1:5173"
-const port = process.env.PORT || 8080
+const port = (process.env.PORT && parseInt(process.env.PORT)) || 8080
 const width = 2160;
 const aspectRatio = 12 / 7;
+const browserPromise = puppeteer.launch({headless: "chrome"})
 
 const app = express();
 app.use(cors({
@@ -20,19 +22,25 @@ app.post("/api/render-card", async (req: Request, res: Response) => {
     const traits = encodeURIComponent(req.body.traits)
     const imageDataUrl = req.body.imageDataUrl
 
-    const browser = await puppeteer.launch({headless: "chrome"})
+    const browser = await browserPromise
     const page: Page = await browser.newPage()
-    await page.setViewport({width: width, height: width / aspectRatio})
-    await page.goto(
-        `${frontendUrl}/school-card?name=${name}&profession=${profession}&traits=${traits}`,
-        {waitUntil: "load"},
-    )
-    await page.type("#imageDataUrl", imageDataUrl)
-    const screenshot = await page.screenshot({type: "png", encoding: "base64"})
-    await browser.close()
-
-    res.set("Content-Type", "application/json")
-    res.json({screenshotBase64: screenshot})
+    try {
+        await page.setViewport({width: width, height: width / aspectRatio})
+        await page.goto(
+            `${frontendUrl}/school-card?name=${name}&profession=${profession}&traits=${traits}`,
+            {waitUntil: "load"},
+        )
+        await page.type("#imageDataUrl", imageDataUrl)
+        const screenshot = await page.screenshot({type: "png", encoding: "base64"})
+        res.set("Content-Type", "application/json")
+        res.json({screenshotBase64: screenshot})
+    } catch (err) {
+        console.error(err)
+        res.status(500)
+        res.json(err)
+    } finally {
+        await page.close()
+    }
 });
 
 // Error handlers
@@ -44,6 +52,6 @@ app.use(function fiveHundredHandler(err: any, req: any, res: any, next: any) {
     res.status(500).send()
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
     console.log(`listening on ${port}`)
 });
