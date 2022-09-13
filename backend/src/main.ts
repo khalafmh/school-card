@@ -8,7 +8,7 @@ const frontendUrl = process.env.FRONTEND_URL || "http://127.0.0.1:5173"
 const port = (process.env.PORT && parseInt(process.env.PORT)) || 8080
 const width = 2160;
 const aspectRatio = 12 / 7;
-const browserPromise = puppeteer.launch({headless: "chrome"})
+const browserPromise = puppeteer.launch({headless: "chrome", args: ["--no-sandbox"]})
 
 const app = express();
 app.use(cors({
