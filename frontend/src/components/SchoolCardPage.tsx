@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {SchoolCard} from "./SchoolCard";
-import {Box} from "@mui/material";
+import {Box, Button} from "@mui/material";
 
 const hiddenInputStyles = {
     opacity: 0,
@@ -24,8 +24,13 @@ export const SchoolCardPage = (props: any) => {
                 <input
                     id="imageDataUrl"
                     type="text"
-                    value={imageDataUrl}
-                    onChange={e => setImageDataUrl(e.target.value)}
+                    maxLength={20971520}
+                />
+                <Button
+                    id="imageUpdateButton"
+                    onClick={e => {
+                        setImageDataUrl((document.getElementById("imageDataUrl")!! as HTMLInputElement).value);
+                    }}
                 />
             </Box>
             <SchoolCard imageSrc={imageDataUrl} name={name} profession={profession} traits={traits}/>

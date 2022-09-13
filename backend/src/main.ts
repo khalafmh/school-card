@@ -14,7 +14,7 @@ const app = express();
 app.use(cors({
     origin: frontendUrl,
 }))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: "10mb"}))
 
 app.post("/api/render-card", async (req: Request, res: Response) => {
     const name = encodeURIComponent(req.body.name)
@@ -30,7 +30,11 @@ app.post("/api/render-card", async (req: Request, res: Response) => {
             `${frontendUrl}/school-card?name=${name}&profession=${profession}&traits=${traits}`,
             {waitUntil: "load"},
         )
-        await page.type("#imageDataUrl", imageDataUrl)
+        await page.evaluate((imageDataUrl) => {
+            const input = document.getElementById("imageDataUrl") as HTMLInputElement
+            input.value = imageDataUrl
+        }, imageDataUrl)
+        await page.click("#imageUpdateButton")
         const screenshot = await page.screenshot({type: "png", encoding: "base64"})
         res.set("Content-Type", "application/json")
         res.json({screenshotBase64: screenshot})
