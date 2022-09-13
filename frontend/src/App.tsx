@@ -123,6 +123,7 @@ function App() {
                             name={name}
                             profession={profession}
                             traits={traits}
+                            widthModifier={80 / 100}
                         />
                         <form>
                             <Button variant={"outlined"} startIcon={<UploadFile/>} component="label">

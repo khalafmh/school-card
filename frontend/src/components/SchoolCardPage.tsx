@@ -33,7 +33,7 @@ export const SchoolCardPage = (props: any) => {
                     }}
                 />
             </Box>
-            <SchoolCard imageSrc={imageDataUrl} name={name} profession={profession} traits={traits}/>
+            <SchoolCard imageSrc={imageDataUrl} name={name} profession={profession} traits={traits} widthModifier={1}/>
         </div>
     )
 }

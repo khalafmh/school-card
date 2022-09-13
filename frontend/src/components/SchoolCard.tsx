@@ -12,6 +12,7 @@ interface LabelProps {
     name: string
     profession: string
     traits: string
+    widthModifier?: number
 }
 
 const rootStyles = {
@@ -43,26 +44,26 @@ const imageStyles = {
 
 const labelColor = `#b56968`;
 
-const labelsContainerStyles = {
+const labelsContainerStyles = (widthModifier: number) => ({
     flex: "1 1 auto",
-    p: "2vw",
+    p: `calc(2.5vw * ${widthModifier})`,
     ["& .MuiTypography-root"]: {
         fontFamily: "'Noto Naskh Arabic', sans-serif",
     },
     ["& .MuiTypography-h5"]: {
         color: labelColor,
-        fontSize: "5vw",
+        fontSize: `calc(6.25vw * ${widthModifier})`,
 
         ["& ~ .MuiTypography-h5"]: {
-            borderTop: "#b56968 1px solid",
-            mt: "1vw",
-            pt: "1vw",
+            borderTop: `#b56968 calc(1.25px * ${widthModifier}) solid`,
+            mt: `calc(1.25vw * ${widthModifier})`,
+            pt: `calc(1.25vw * ${widthModifier})`,
         },
     },
     ["& .MuiTypography-subtitle2"]: {
-        fontSize: "3vw",
+        fontSize: `calc(3.75vw * ${widthModifier})`,
     },
-}
+})
 
 const CardImage = (props: ImageProps) => (
     <Box sx={imageStyles}>
@@ -76,7 +77,7 @@ const CardLabels = (props: LabelProps) => {
     const traits = isBlank(props.traits) ? "سطر 1\nسطر 2" : props.traits
 
     return (
-        <Box sx={labelsContainerStyles}>
+        <Box sx={labelsContainerStyles(props?.widthModifier ?? 1)}>
             <Typography variant="h5">اسمي</Typography>
             <Typography variant="subtitle2">{name}</Typography>
             <Typography variant="h5">مهنتي المستقبلية</Typography>
@@ -92,6 +93,11 @@ const CardLabels = (props: LabelProps) => {
 export const SchoolCard = React.forwardRef((props: ImageProps & LabelProps, ref: any) => (
     <Box ref={ref} sx={rootStyles} className={"school-card"}>
         <CardImage imageSrc={props.imageSrc}/>
-        <CardLabels name={props.name} profession={props.profession} traits={props.traits}/>
+        <CardLabels
+            name={props.name}
+            profession={props.profession}
+            traits={props.traits}
+            widthModifier={props.widthModifier}
+        />
     </Box>
 ))
