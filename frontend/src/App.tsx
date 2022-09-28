@@ -125,7 +125,7 @@ function App() {
             <RTL>
                 <Box sx={rootStyles}>
                     <Box sx={mainStyles}>
-                        <Typography variant={"h2"} component={"h1"} align={"center"}>بطاقة الطالبة</Typography>
+                        <Typography variant={"h2"} component={"h1"} align={"center"}>بطاقة تعريفية</Typography>
                         <SchoolCard
                             imageSrc={cardImageData}
                             name={name}
@@ -243,7 +243,7 @@ function App() {
                                 crop={crop}
                                 onChange={(_, c) => setCrop(c)}
                             >
-                                <img ref={originalImageRef} src={image} alt={"صورة الطالبة قبل التعديل"}/>
+                                <img ref={originalImageRef} src={image} alt={"الصورة الشخصية قبل التعديل"}/>
                             </ReactCrop>
                             <Button
                                 variant={"contained"}

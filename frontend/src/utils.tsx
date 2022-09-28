@@ -68,7 +68,7 @@ export async function initiateDownload(name: string, profession: string, traits:
                 const json = await response.json()
                 const {screenshotBase64} = json
                 const element = document.createElement("a")
-                element.download = "بطاقة الطالبة.png"
+                element.download = "بطاقة تعريفية.png"
                 element.href = `data:image/png;base64,${screenshotBase64}`
                 element.click()
                 element.remove()
