@@ -1,9 +1,10 @@
 import React, {useCallback, useState} from "react";
 
-declare const umami: any
 declare global {
     interface Window {
-        umami: any
+        umami?: {
+            track: (eventName: string, eventData?: Record<string, string | number | boolean>) => void
+        }
     }
 }
 
@@ -151,7 +152,7 @@ function App() {
                                                     file_size: target.files?.[0]?.size,
                                                     file_type: target.files?.[0]?.type,
                                                 }
-                                                umami.trackEvent("choose_photo", eventData)
+                                                window.umami.track("choose_photo", eventData)
                                             }
                                             setImage(URL.createObjectURL(target.files?.[0]))
                                             setImageDialogOpen(true)
@@ -195,7 +196,7 @@ function App() {
                                             traits_num_lines: traits.split("\n").length,
                                             image_data_url_length: cardImageData.length,
                                         }
-                                        umami.trackEvent("click_download", eventData)
+                                        window.umami.track("click_download", eventData)
                                     }
                                     setInfoMessage("بانتظار التنزيل");
                                     const error = await initiateDownload(name, profession, traits, cardImageData);
@@ -208,7 +209,7 @@ function App() {
                                                 type: "error",
                                                 errorMessage: error.message,
                                             }
-                                            umami.trackEvent("card_download_failed", eventData)
+                                            window.umami.track("card_download_failed", eventData)
                                         }
                                         console.error(error);
                                         setError(error)
@@ -217,7 +218,7 @@ function App() {
                                             const eventData = {
                                                 type: "result",
                                             }
-                                            umami.trackEvent("card_download_succeeded", eventData)
+                                            window.umami.track("card_download_succeeded", eventData)
                                         }
                                         setSuccessMessage("تم التنزيل");
                                     }
@@ -264,7 +265,7 @@ function App() {
                                             crop_width_percent: crop.width,
                                             crop_height_percent: crop.height,
                                         }
-                                        umami.trackEvent("crop_image", eventData)
+                                        window.umami.track("crop_image", eventData)
                                     }
                                 }}
                             >
