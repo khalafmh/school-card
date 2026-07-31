@@ -51,6 +51,7 @@ test("tracker configuration preserves the privacy contract", () => {
     }
 
     assert.match(html, /integrity="sha384-[A-Za-z0-9+/=]+"/)
+    assert.ok(!html.includes("/recorder.js"), "session replay and heatmap collection must not be loaded")
 })
 
 test("only typed, data-free custom events are allowed", () => {
