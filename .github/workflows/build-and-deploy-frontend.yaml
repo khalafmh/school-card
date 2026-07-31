@@ -1,23 +1,35 @@
 name: Build and Deploy
-on: push
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
 env:
   CNAME: "school-card.mahdi.pro"
+
 jobs:
   build_and_deploy_frontend:
     name: Build and deploy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-26.04
     defaults:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 16
+          node-version: 24
+          package-manager-cache: false
+      - name: Enable Corepack
+        run: corepack enable
       - name: Install dependencies
-        run: yarn
+        run: yarn install --immutable
       - name: Build site
-        run: yarn run build
+        run: yarn build
       - name: Add CNAME
         run: echo $CNAME > dist/CNAME
       - name: Configure Git
@@ -26,4 +38,4 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
       - name: Deploy site to Github Pages
-        run: npx gh-pages -d dist
+        run: npx --yes gh-pages@6.3.0 -d dist
