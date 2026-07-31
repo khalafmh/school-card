@@ -1,14 +1,20 @@
 import assert from "node:assert/strict"
-import {readFile} from "node:fs/promises"
+import {readFile, readdir} from "node:fs/promises"
 import test from "node:test"
 import vm from "node:vm"
 
 const frontendRoot = new URL("../", import.meta.url)
-const [html, appSource, analyticsSource] = await Promise.all([
+const sourceRoot = new URL("src/", frontendRoot)
+const [html, analyticsSource, sourceFileNames] = await Promise.all([
     readFile(new URL("index.html", frontendRoot), "utf8"),
-    readFile(new URL("src/App.tsx", frontendRoot), "utf8"),
-    readFile(new URL("src/analytics.ts", frontendRoot), "utf8"),
+    readFile(new URL("analytics.ts", sourceRoot), "utf8"),
+    readdir(sourceRoot, {recursive: true}),
 ])
+const sourceFiles = await Promise.all(sourceFileNames
+    .filter(fileName => /\.[jt]sx?$/.test(fileName))
+    .map(async fileName => ({fileName, source: await readFile(new URL(fileName, sourceRoot), "utf8")})))
+const appSource = sourceFiles.find(({fileName}) => fileName === "App.tsx")?.source
+assert.ok(appSource, "App.tsx must be included in the analytics contract scan")
 
 const eventListMatch = analyticsSource.match(/analyticsEvents\s*=\s*\[([\s\S]*?)]\s*as const/)
 assert.ok(eventListMatch, "analyticsEvents must remain a readonly event allowlist")
@@ -20,6 +26,9 @@ const privacyScript = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script
     .map(match => match[1])
     .find(source => source.includes("window.filterUmamiPayload"))
 assert.ok(privacyScript, "the Umami privacy callback must be defined inline before the tracker loads")
+const runtimeEventListMatch = privacyScript.match(/allowedEvents\s*=\s*new Set\(\[([\s\S]*?)]\)/)
+assert.ok(runtimeEventListMatch, "the runtime event allowlist must be explicit")
+const runtimeEvents = [...runtimeEventListMatch[1].matchAll(/"([^"]+)"/g)].map(match => match[1])
 
 const origin = "https://school-card.mahdi.pro"
 const context = {window: {location: {origin}}, URL}
@@ -57,7 +66,13 @@ test("tracker configuration preserves the privacy contract", () => {
 test("only typed, data-free custom events are allowed", () => {
     const appEvents = [...appSource.matchAll(/trackEvent\("([^"]+)"\)/g)].map(match => match[1])
     assert.deepEqual([...new Set(appEvents)].sort(), [...analyticsEvents].sort())
-    assert.ok(!appSource.includes("window.umami"), "components must use the typed analytics wrapper")
+    assert.deepEqual([...runtimeEvents].sort(), [...analyticsEvents].sort(), "runtime and typed allowlists must match")
+
+    for (const {fileName, source} of sourceFiles) {
+        if (fileName !== "analytics.ts") {
+            assert.ok(!source.includes("window.umami"), `${fileName} must use the typed analytics wrapper`)
+        }
+    }
 
     for (const eventName of analyticsEvents) {
         const result = filterPayload("event", {...basePayload, name: eventName, data: undefined})

@@ -26,6 +26,17 @@ The approved event funnel is:
 
 Core Web Vitals collection is enabled with `data-performance="true"`. Performance payloads pass through the same privacy callback and are rejected for the private renderer.
 
+## Renderer rollout
+
+The privacy-safe renderer protocol requires a coordinated rollout:
+
+1. Deploy the frontend first. It temporarily supports both the legacy query-string protocol and the new DOM-input protocol while suppressing renderer analytics.
+2. Deploy the backend. The backend then navigates to a query-free `/school-card` URL and injects private card data through the DOM.
+3. Confirm downloads work in production.
+4. Remove the controls marked as legacy in `SchoolCardPage.tsx` in a follow-up release.
+
+Deploying the backend before the compatible frontend causes card rendering to return HTTP 500 because the new DOM controls do not exist in the old frontend.
+
 ## Environments
 
 The production website ID must only be used for `school-card.mahdi.pro`. If staging analytics are needed, create a separate Umami website ID and restrict it to the staging hostname; never add staging domains to the production tracker.

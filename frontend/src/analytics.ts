@@ -11,7 +11,7 @@ export type AnalyticsEvent = typeof analyticsEvents[number]
 declare global {
     interface Window {
         umami?: {
-            track: (eventName: string) => unknown
+            track: (eventName: AnalyticsEvent) => unknown
         }
     }
 }
