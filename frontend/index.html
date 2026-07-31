@@ -26,11 +26,26 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.filterUmamiPayload = function (_type, payload) {
+        if (typeof payload?.url !== "string") return false;
+
+        try {
+          const path = new URL(payload.url, window.location.origin).pathname;
+          return path === "/school-card" || path.startsWith("/school-card/") ? false : payload;
+        } catch {
+          return false;
+        }
+      };
+    </script>
     <script async
             defer
             data-website-id="6ab189c7-a28d-4398-8457-29196ea94545"
             data-do-not-track="true"
             data-domains="school-card.mahdi.pro"
+            data-exclude-search="true"
+            data-exclude-hash="true"
+            data-before-send="filterUmamiPayload"
             src="https://umami.mahdi.pro/script.js"></script>
   </body>
 </html>

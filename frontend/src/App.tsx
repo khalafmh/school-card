@@ -3,7 +3,7 @@ import React, {useCallback, useState} from "react";
 declare global {
     interface Window {
         umami?: {
-            track: (eventName: string, eventData?: Record<string, string | number | boolean>) => void
+            track: (eventName: string) => void
         }
     }
 }
@@ -145,15 +145,7 @@ function App() {
                                     onInput={e => {
                                         const target = e.target as HTMLInputElement;
                                         if (target.files?.[0] != null) {
-                                            if (window.umami) {
-                                                const eventData = {
-                                                    type: "action",
-                                                    num_files: target.files.length,
-                                                    file_size: target.files?.[0]?.size,
-                                                    file_type: target.files?.[0]?.type,
-                                                }
-                                                window.umami.track("choose_photo", eventData)
-                                            }
+                                            window.umami?.track("choose_photo")
                                             setImage(URL.createObjectURL(target.files?.[0]))
                                             setImageDialogOpen(true)
                                         }
@@ -184,42 +176,18 @@ function App() {
                                 variant={"contained"}
                                 className={"default-width"}
                                 onClick={async () => {
-                                    if (window.umami) {
-                                        const eventData = {
-                                            type: "action",
-                                            name_length: name.length,
-                                            name_words: name.split(/\s+/).length,
-                                            profession_length: profession.length,
-                                            profession_words: profession.split(/\s+/).length,
-                                            traits_length: traits.length,
-                                            traits_words: traits.split(/\s+/).length,
-                                            traits_num_lines: traits.split("\n").length,
-                                            image_data_url_length: cardImageData.length,
-                                        }
-                                        window.umami.track("click_download", eventData)
-                                    }
+                                    window.umami?.track("click_download")
                                     setInfoMessage("بانتظار التنزيل");
                                     const error = await initiateDownload(name, profession, traits, cardImageData);
                                     setInfoMessage(null)
                                     setSuccessMessage(null)
                                     setError(null)
                                     if (error != null) {
-                                        if (window.umami) {
-                                            const eventData = {
-                                                type: "error",
-                                                errorMessage: error.message,
-                                            }
-                                            window.umami.track("card_download_failed", eventData)
-                                        }
+                                        window.umami?.track("card_download_failed")
                                         console.error(error);
                                         setError(error)
                                     } else {
-                                        if (window.umami) {
-                                            const eventData = {
-                                                type: "result",
-                                            }
-                                            window.umami.track("card_download_succeeded", eventData)
-                                        }
+                                        window.umami?.track("card_download_succeeded")
                                         setSuccessMessage("تم التنزيل");
                                     }
                                 }}
@@ -259,14 +227,7 @@ function App() {
                                         crop.y
                                     )
                                     setCardImageData(croppedImageDataUrl)
-                                    if (window.umami) {
-                                        const eventData = {
-                                            type: "action",
-                                            crop_width_percent: crop.width,
-                                            crop_height_percent: crop.height,
-                                        }
-                                        window.umami.track("crop_image", eventData)
-                                    }
+                                    window.umami?.track("crop_image")
                                 }}
                             >
                                 موافق
