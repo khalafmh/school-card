@@ -1,13 +1,5 @@
 import React, {useCallback, useState} from "react";
 
-declare global {
-    interface Window {
-        umami?: {
-            track: (eventName: string) => void
-        }
-    }
-}
-
 import {
     Alert,
     Box,
@@ -31,6 +23,7 @@ import {aspectRatio, imageToCardRatio} from "./constants";
 import ReactCrop, {Crop} from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import {ContactMeList} from "./components/ContactMeList";
+import {trackEvent} from "./analytics";
 
 const theme = createTheme({
     direction: "rtl",
@@ -145,7 +138,7 @@ function App() {
                                     onInput={e => {
                                         const target = e.target as HTMLInputElement;
                                         if (target.files?.[0] != null) {
-                                            window.umami?.track("choose_photo")
+                                            trackEvent("choose_photo")
                                             setImage(URL.createObjectURL(target.files?.[0]))
                                             setImageDialogOpen(true)
                                         }
@@ -176,18 +169,18 @@ function App() {
                                 variant={"contained"}
                                 className={"default-width"}
                                 onClick={async () => {
-                                    window.umami?.track("click_download")
+                                    trackEvent("click_download")
                                     setInfoMessage("بانتظار التنزيل");
                                     const error = await initiateDownload(name, profession, traits, cardImageData);
                                     setInfoMessage(null)
                                     setSuccessMessage(null)
                                     setError(null)
                                     if (error != null) {
-                                        window.umami?.track("card_download_failed")
+                                        trackEvent("card_download_failed")
                                         console.error(error);
                                         setError(error)
                                     } else {
-                                        window.umami?.track("card_download_succeeded")
+                                        trackEvent("card_download_succeeded")
                                         setSuccessMessage("تم التنزيل");
                                     }
                                 }}
@@ -227,7 +220,7 @@ function App() {
                                         crop.y
                                     )
                                     setCardImageData(croppedImageDataUrl)
-                                    window.umami?.track("crop_image")
+                                    trackEvent("crop_image")
                                 }}
                             >
                                 موافق

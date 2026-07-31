@@ -27,12 +27,38 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      window.filterUmamiPayload = function (_type, payload) {
-        if (typeof payload?.url !== "string") return false;
+      window.filterUmamiPayload = function (type, payload) {
+        const allowedEvents = new Set([
+          "choose_photo",
+          "crop_image",
+          "click_download",
+          "card_download_succeeded",
+          "card_download_failed",
+        ]);
+
+        if (
+          !payload ||
+          typeof payload.url !== "string" ||
+          (type !== "event" && type !== "performance") ||
+          payload.id !== undefined ||
+          payload.data !== undefined ||
+          (payload.name !== undefined && !allowedEvents.has(payload.name))
+        ) return false;
 
         try {
-          const path = new URL(payload.url, window.location.origin).pathname;
-          return path === "/school-card" || path.startsWith("/school-card/") ? false : payload;
+          const url = new URL(payload.url, window.location.origin);
+          if (url.origin !== window.location.origin || (url.pathname !== "/" && url.pathname !== "/index.html")) {
+            return false;
+          }
+          url.search = "";
+          url.hash = "";
+
+          const sanitizedPayload = {...payload, url: url.toString()};
+          if (payload.referrer) {
+            const referrer = new URL(payload.referrer, window.location.origin);
+            sanitizedPayload.referrer = referrer.origin === window.location.origin ? "" : `${referrer.origin}/`;
+          }
+          return sanitizedPayload;
         } catch {
           return false;
         }
@@ -40,11 +66,14 @@
     </script>
     <script async
             defer
+            crossorigin="anonymous"
+            integrity="sha384-KovSIPpdrAZNHs+M91d7FOrLat5rqcpTtQUq/GLIzYwAt+eN0EQHlgdUgm/0U2j+"
             data-website-id="6ab189c7-a28d-4398-8457-29196ea94545"
             data-do-not-track="true"
             data-domains="school-card.mahdi.pro"
             data-exclude-search="true"
             data-exclude-hash="true"
+            data-performance="true"
             data-before-send="filterUmamiPayload"
             src="https://umami.mahdi.pro/script.js"></script>
   </body>
