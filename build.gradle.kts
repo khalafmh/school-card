@@ -2,9 +2,10 @@ plugins {
     id("base")
 }
 
-val backendImageRepo = "registry.cluster.mahdi.cloud/school-card/backend"
-val backendImageVersion = "2022-09-13"
-val backendImageRef = "$backendImageRepo:${backendImageVersion}"
+val backendImageRepo = "registry.mahdi.pro/school-card/backend"
+val backendImageTag = providers.gradleProperty("backendImageTag").orNull
+    ?: error("Set -PbackendImageTag to an immutable release tag before building an image")
+val backendImageRef = "$backendImageRepo:$backendImageTag"
 
 tasks.register<Exec>("buildBackendImage") {
     group = "deployment"
