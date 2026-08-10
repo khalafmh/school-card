@@ -13,7 +13,7 @@ The project also reserves the `frontend` repository, but production frontend ass
 Repository-scoped robot credentials are stored locally and are never committed:
 
 - `.secrets/registry/school-card-prod-pull-robot.yaml` — pull only, for deployments and image consumers.
-- `.secrets/registry/school-card-prod-push-robot.yaml` — image publishing; Harbor push authorization includes pull.
+- `.secrets/registry/school-card-prod-push-robot.yaml` — image publishing and pull access.
 
 Neither robot has repository delete access. Both credentials are project-wide and therefore cover every repository in the dedicated private `school-card` project. This workspace uses only `backend` and `frontend`; do not add unrelated repositories to the project.
 
